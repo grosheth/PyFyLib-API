@@ -1,17 +1,19 @@
 import spotipy
 from tools.authentication import login
 
-def get_artist_id(artist: str = "", track: str = ""):
+def get_artist_id(artist: str, track: str):
     spotify = login()
 
     track_id = spotify.search(q='artist:' + artist + ' track:' + track, type='track')
-    songs_info = []
-    # for x in track_id['tracks']['items']: 
+    songs_info = {}
+ 
     for index, content in enumerate(track_id['tracks']['items']): 
         song_info = {index: {'artist': content['artists'][0]['name'], 'track': content['name'],'id': content['id'] }}
-        songs_info.append(song_info)
+        songs_info.update(song_info)
 
     print(songs_info)
+
+    return songs_info
 # def get_top10(artist=None, artist_id=None):
 #     lz_uri = 'spotify:artist:36QJpDe2go2KgaRleHCDTp'
 #
